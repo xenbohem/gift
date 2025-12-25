@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy 2026 – Dwelling in Christ</title>
+
+<style>
+:root {
+  --bg-dark: #10070d;
+  --plum: #2b1022;
+  --rose: #e7a1c4;
+  --pink: #f5c3da;
+  --gold: #d6b45a;
+  --pearl: linear-gradient(135deg, #f9e7ef, #f1c9dc, #fff1d6);
+  --text: #f9eef4;
+  --muted: #c8a6b8;
+  --glow: rgba(245,195,218,0.6);
+}
+
+body {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  background: radial-gradient(circle at top, #34152a, var(--bg-dark));
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent scroll during countdown */
+}
+
+.countdown-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #34152a, var(--bg-dark));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.countdown-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.gift-container {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
+
+.bouncing-image {
+  width: 150px;
+  height: 150px;
+  animation: gentleBounce 2s infinite ease-in-out;
+  margin-bottom: 20px;
+}
+
+@keyframes gentleBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.open-gift-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: var(--gold);
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--bg-dark);
+  pointer-events: none; /* Allow click on container */
+}
+
+.countdown-text {
+  font-size: 1.5rem;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.container {
+  max-width: 950px;
+  width: 95%;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+
+.container.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-menu {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+}
+
+.menu-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 1.5rem;
+  transition: background 0.3s;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.menu-items {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: rgba(42, 15, 31, 0.9);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px var(--glow);
+  min-width: 200px;
+}
+
+.menu-items.show {
+  display: block;
+}
+
+.menu-items a {
+  display: block;
+  color: var(--pink);
+  text-decoration: none;
+  padding: 8px 0;
+  transition: color 0.3s;
+}
+
+.menu-items a:hover {
+  color: var(--gold);
+}
+
+.share-btn {
+  background: var(--gold);
+  color: var(--bg-dark);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: inherit;
+}
+
+.share-btn:hover {
+  background: var(--rose);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+header h1 {
+  font-size: 2.6rem;
+  background: var(--pearl);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 18px rgba(255,215,230,0.35);
+}
+
+header small {
+  display: block;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.name-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--gold);
+  color: var(--rose);
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.name-section {
+  display: block;
+}
+
+.name-section.hidden {
+  display: none;
+}
+
+.month-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.4rem 0;
+}
+
+.month-bar button {
+  border-radius: 20px;
+  border: 1px solid var(--gold);
+  background: transparent;
+  color: var(--gold);
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+}
+
+.month-title {
+  font-size: 1.3rem;
+  color: var(--pink);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.6rem;
+}
+
+.day {
+  background: linear-gradient(160deg, #2a0f1f, #1a0913);
+  border-radius: 16px;
+  padding: 0.7rem;
+  min-height: 80px;
+  border: 1px solid rgba(214,180,90,0.2);
+  opacity: 0.35;
+  position: relative;
+}
+
+.day.unlocked {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.day.unlocked:hover {
+  opacity: 1;
+}
+
+.day.today {
+  opacity: 1;
+  animation: glowPulse 4s ease-in-out infinite;
+  border-color: var(--rose);
+}
+
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 12px var(--glow); }
+  50% { box-shadow: 0 0 26px var(--glow); }
+}
+
+.day-number {
+  color: var(--gold);
+  font-size: 0.85rem;
+}
+
+.lock {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.message-box {
+  margin-top: 1.5rem;
+  background: linear-gradient(145deg, #2f1223, #160810);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid rgba(214,180,90,0.3);
+}
+
+.message-box h3 {
+  color: var(--rose);
+}
+
+.scripture {
+  font-style: italic;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+.prayer-btn {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #f5c3da, #e6b876);
+  color: #2a0f1f;
+  border: none;
+  padding: 0.4rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.prayer {
+  margin-top: 0.7rem;
+  color: var(--text);
+  display: none;
+}
+</style>
+</head>
+
+<body>
+<!-- Countdown Screen -->
+<div class="countdown-screen" id="countdown-screen">
+  <div class="gift-container" id="gift-container">
+    <img src="https://via.placeholder.com/150x150/ffd700/000000?text=🎁" alt="Gift" class="bouncing-image">
+    <div class="open-gift-text">Open Gift</div>
+  </div>
+  <div class="countdown-text">Your 2026 Devotional Awaits!</div>
+</div>
+
+<div class="container" id="main-container">
+  <!-- Navigation Menu -->
+  <nav class="nav-menu">
+    <button class="menu-toggle" id="menu-toggle">☰</button>
+    <div class="menu-items" id="menu-items">
+      <a href="https://www.youtube.com/channel/YOUR_CHANNEL" target="_blank">📺 Subscribe to My Channel</a>
+      <a href="https://www.instagram.com/YOUR_INSTAGRAM" target="_blank">📷 Follow Me on Instagram</a>
+      <button class="share-btn" id="share-btn">📤 Share This Site</button>
+    </div>
+  </nav>
+
+<header>
+  <h1 id="headerTitle">Happy 2026!</h1>
+  <div class="name-section" id="nameSection">
+    <small>How should we call you?</small>
+    <input class="name-input" id="nameInput" placeholder="Beloved of God">
+  </div>
+</header>
+
+<div class="month-bar">
+  <button onclick="changeMonth(-1)">‹</button>
+  <div class="month-title" id="monthTitle"></div>
+  <button onclick="changeMonth(1)">›</button>
+</div>
+
+<div class="calendar" id="calendar"></div>
+
+<div class="message-box" id="message-box">
+  <h3 id="messageTitle">Welcome</h3>
+  <p id="messageText">Select today’s date to receive what the Lord has prepared.</p>
+  <div class="scripture" id="scriptureText"></div>
+  <button class="prayer-btn" onclick="togglePrayer()">Daily Prayer</button>
+  <div class="prayer" id="prayerText"></div>
+</div>
+
+</div>
+
+<script>
+const today = new Date();
+
+const countdownScreen = document.getElementById('countdown-screen');
+const mainContainer = document.getElementById('main-container');
+const giftContainer = document.getElementById('gift-container');
+const menuToggle = document.getElementById('menu-toggle');
+const menuItems = document.getElementById('menu-items');
+const shareBtn = document.getElementById('share-btn');
+
+// Show countdown screen initially
+// Click event to open the gift
+giftContainer.onclick = () => {
+  countdownScreen.classList.add('hidden');
+  mainContainer.classList.add('visible');
+  document.body.style.overflow = 'auto'; // Allow scroll after opening
+  initializeApp();
+};
+
+// Menu toggle
+menuToggle.onclick = () => {
+  menuItems.classList.toggle('show');
+};
+
+// Share functionality
+shareBtn.onclick = () => {
+  if (navigator.share) {
+    navigator.share({
+      title: 'Happy 2026 – Dwelling in Christ',
+      text: 'Check out this beautiful 2026 devotional calendar!',
+      url: window.location.href
+    });
+  } else {
+    // Fallback: copy to clipboard
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link copied to clipboard!');
+    });
+  }
+};
+
+function initializeApp() {
+  const devotionals = Array.from({length:31},(_,i)=>({
+    message: [
+      "Rest in Me. Healing begins when striving ends.",
+      "Abide in Me; closeness is where strength grows.",
+      "I am gently restoring your heart.",
+      "You are safe in My presence.",
+      "Let My peace settle you today.",
+      "Remain with Me and be renewed.",
+      "I am near to the brokenhearted.",
+      "You are being made whole.",
+      "My grace is sufficient for you.",
+      "Stay with Me; I delight in you.",
+      "You are not alone.",
+      "I am your refuge.",
+      "Trust Me with your wounds.",
+      "Healing flows from My love.",
+      "I am shaping beauty in you.",
+      "Be still and know Me.",
+      "Your heart is precious to Me.",
+      "I am patient with your growth.",
+      "Remain rooted in truth.",
+      "I am your peace.",
+      "Let grace lead you.",
+      "You are deeply known.",
+      "I am faithful.",
+      "Your healing matters.",
+      "Come dwell with Me.",
+      "My love covers you.",
+      "You are cherished.",
+      "I walk with you.",
+      "My light surrounds you.",
+      "Rest in My care.",
+      "Abide and flourish."
+    ][i],
+    verse: [
+      "Psalm 46:10","John 15:4","Psalm 147:3","Isaiah 41:10",
+      "John 14:27","Isaiah 40:31","Psalm 34:18","2 Corinthians 5:17",
+      "2 Corinthians 12:9","Zephaniah 3:17","Deuteronomy 31:6",
+      "Psalm 91:2","Matthew 11:28","1 John 4:16","Romans 8:28",
+      "Psalm 46:10","Luke 12:6","Philippians 1:6","Colossians 2:7",
+      "John 16:33","Ephesians 2:8","Psalm 139:1","Lamentations 3:22",
+      "Jeremiah 30:17","Psalm 27:4","Romans 5:8","Isaiah 43:4",
+      "Micah 6:8","John 1:5","Psalm 4:8","John 15:5"
+    ][i],
+    prayer: "Lord Jesus, I choose to dwell in You today. Heal what is tender, strengthen what is weak, and draw me ever closer to Your heart. Amen."
+  }));
+
+  let month = today.getMonth();
+  let year = today.getFullYear();
+
+  const calendar = document.getElementById("calendar");
+  const monthTitle = document.getElementById("monthTitle");
+  const nameInput = document.getElementById("nameInput");
+  const nameSection = document.getElementById("nameSection");
+  const headerTitle = document.getElementById("headerTitle");
+
+  // Load saved name from localStorage
+  let userName = localStorage.getItem('userName') || '';
+  if (userName) {
+    nameInput.value = userName;
+    updateHeaderWithName();
+  } else {
+    // Show initial greeting only if no name is set
+    setTimeout(() => {
+      alert("Welcome to your 2026 devotional journey! Please enter your name to begin.");
+    }, 500);
+  }
+
+  // Event listener for name input
+  nameInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && nameInput.value.trim()) {
+      userName = nameInput.value.trim();
+      localStorage.setItem('userName', userName);
+      updateHeaderWithName();
+    }
+  });
+
+  nameInput.addEventListener('blur', () => {
+    if (nameInput.value.trim()) {
+      userName = nameInput.value.trim();
+      localStorage.setItem('userName', userName);
+      updateHeaderWithName();
+    }
+  });
+
+  function updateHeaderWithName() {
+    headerTitle.textContent = `Greetings, ${userName}!`;
+    nameSection.classList.add('hidden');
+  }
+
+  function renderCalendar() {
+    calendar.innerHTML = "";
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    monthTitle.textContent = new Date(year, month)
+      .toLocaleString("default",{month:"long",year:"numeric"});
+
+    for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement("div"));
+
+    for(let d=1;d<=daysInMonth;d++){
+      const cell = document.createElement("div");
+      const cellDate = new Date(year,month,d);
+      const unlocked = cellDate <= today;
+
+      cell.className = "day" + (unlocked ? " unlocked" : "");
+      if(d===today.getDate() && month===today.getMonth() && year===today.getFullYear())
+        cell.classList.add("today");
+
+      cell.innerHTML = `<div class="day-number">${d}</div>` +
+        (unlocked ? "" : `<div class="lock">locked</div>`);
+
+      if(unlocked){
+        cell.onclick = ()=>selectDay(d);
+      }
+      calendar.appendChild(cell);
+    }
+  }
+
+  function selectDay(day){
+    playF(day);
+    const data = devotionals[day-1];
+    document.getElementById("messageTitle").textContent = `Day ${day}`;
+    document.getElementById("messageText").textContent = data.message;
+    document.getElementById("scriptureText").textContent = data.verse;
+    document.getElementById("prayerText").textContent = data.prayer;
+    document.getElementById("prayerText").style.display = "none";
+    // Scroll to the message box
+    document.getElementById('message-box').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function togglePrayer(){
+    const p = document.getElementById("prayerText");
+    p.style.display = p.style.display==="block"?"none":"block";
+  }
+
+  function changeMonth(n){
+    month += n;
+    if(month<0){month=11;year--;}
+    if(month>11){month=0;year++;}
+    renderCalendar();
+  }
+
+  function playF(day = 1){
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Full gentle F-major palette
+    const scale = [
+      349.23, // F
+      440.00, // A
+      523.25, // C
+      587.33, // D
+      466.16  // Bb
+    ];
+
+    // Determine how many notes are allowed today
+    const noteCount = Math.min(2 + Math.floor(day / 6), scale.length);
+    const melody = scale.slice(0, noteCount);
+
+    const now = ctx.currentTime;
+
+      
+      melody.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.value = freq;
+
+      const start = now + i * 0.55;
+
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.035, start + 0.2);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + 1.0);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(start);
+      osc.stop(start + 1.2);
+    });
+  }
+
+  renderCalendar();
+}
+</script>
+</body>
+</html>
