@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy 2026 – Dwelling in Christ</title>
+<title>Devotional Calendar – Dwelling in Christ</title>
 
 <style>
 :root {
@@ -26,152 +26,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Prevent scroll during countdown */
-}
-
-.countdown-screen {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at top, #34152a, var(--bg-dark));
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  transition: opacity 1s ease, visibility 1s ease;
-}
-
-.countdown-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.gift-container {
-  position: relative;
-  cursor: pointer;
-  text-align: center;
-}
-
-.bouncing-image {
-  width: 150px;
-  height: 150px;
-  animation: gentleBounce 2s infinite ease-in-out;
-  margin-bottom: 20px;
-}
-
-@keyframes gentleBounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
-}
-
-.open-gift-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.2rem;
-  color: var(--gold);
-  font-weight: bold;
-  text-shadow: 0 0 5px var(--bg-dark);
-  pointer-events: none; /* Allow click on container */
-}
-
-.countdown-text {
-  font-size: 1.5rem;
-  color: var(--gold);
-  text-align: center;
-  margin-bottom: 10px;
 }
 
 .container {
   max-width: 950px;
   width: 95%;
   padding: 2rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 1s ease, visibility 1s ease;
-}
-
-.container.visible {
-  opacity: 1;
-  visibility: visible;
-}
-
-.nav-menu {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 50;
-}
-
-.menu-toggle {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--gold);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold);
-  font-size: 1.5rem;
-  transition: background 0.3s;
-}
-
-.menu-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.menu-items {
-  display: none;
-  position: absolute;
-  top: 60px;
-  right: 0;
-  background: rgba(42, 15, 31, 0.9);
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 0 10px var(--glow);
-  min-width: 200px;
-}
-
-.menu-items.show {
-  display: block;
-}
-
-.menu-items a {
-  display: block;
-  color: var(--pink);
-  text-decoration: none;
-  padding: 8px 0;
-  transition: color 0.3s;
-}
-
-.menu-items a:hover {
-  color: var(--gold);
-}
-
-.share-btn {
-  background: var(--gold);
-  color: var(--bg-dark);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-family: inherit;
-}
-
-.share-btn:hover {
-  background: var(--rose);
 }
 
 header {
@@ -202,14 +62,6 @@ header small {
   margin-top: 0.5rem;
   font-size: 1rem;
   outline: none;
-}
-
-.name-section {
-  display: block;
-}
-
-.name-section.hidden {
-  display: none;
 }
 
 .month-bar {
@@ -320,32 +172,12 @@ header small {
 </head>
 
 <body>
-<!-- Countdown Screen -->
-<div class="countdown-screen" id="countdown-screen">
-  <div class="gift-container" id="gift-container">
-    <img src="https://via.placeholder.com/150x150/ffd700/000000?text=🎁" alt="Gift" class="bouncing-image">
-    <div class="open-gift-text">Open Gift</div>
-  </div>
-  <div class="countdown-text">Your 2026 Devotional Awaits!</div>
-</div>
-
-<div class="container" id="main-container">
-  <!-- Navigation Menu -->
-  <nav class="nav-menu">
-    <button class="menu-toggle" id="menu-toggle">☰</button>
-    <div class="menu-items" id="menu-items">
-      <a href="https://www.youtube.com/channel/YOUR_CHANNEL" target="_blank">📺 Subscribe to My Channel</a>
-      <a href="https://www.instagram.com/YOUR_INSTAGRAM" target="_blank">📷 Follow Me on Instagram</a>
-      <button class="share-btn" id="share-btn">📤 Share This Site</button>
-    </div>
-  </nav>
+<div class="container">
 
 <header>
-  <h1 id="headerTitle">Happy 2026!</h1>
-  <div class="name-section" id="nameSection">
-    <small>How should we call you?</small>
-    <input class="name-input" id="nameInput" placeholder="Beloved of God">
-  </div>
+  <h1>Devotional Calendar</h1>
+  <small>What do you want to be called?</small>
+  <input class="name-input" placeholder="Beloved of God">
 </header>
 
 <div class="month-bar">
@@ -356,7 +188,7 @@ header small {
 
 <div class="calendar" id="calendar"></div>
 
-<div class="message-box" id="message-box">
+<div class="message-box">
   <h3 id="messageTitle">Welcome</h3>
   <p id="messageText">Select today’s date to receive what the Lord has prepared.</p>
   <div class="scripture" id="scriptureText"></div>
@@ -369,229 +201,152 @@ header small {
 <script>
 const today = new Date();
 
-const countdownScreen = document.getElementById('countdown-screen');
-const mainContainer = document.getElementById('main-container');
-const giftContainer = document.getElementById('gift-container');
-const menuToggle = document.getElementById('menu-toggle');
-const menuItems = document.getElementById('menu-items');
-const shareBtn = document.getElementById('share-btn');
+const devotionals = Array.from({length:31},(_,i)=>({
+  message: [
+    "Rest in Me. Healing begins when striving ends.",
+    "Abide in Me; closeness is where strength grows.",
+    "I am gently restoring your heart.",
+    "You are safe in My presence.",
+    "Let My peace settle you today.",
+    "Remain with Me and be renewed.",
+    "I am near to the brokenhearted.",
+    "You are being made whole.",
+    "My grace is sufficient for you.",
+    "Stay with Me; I delight in you.",
+    "You are not alone.",
+    "I am your refuge.",
+    "Trust Me with your wounds.",
+    "Healing flows from My love.",
+    "I am shaping beauty in you.",
+    "Be still and know Me.",
+    "Your heart is precious to Me.",
+    "I am patient with your growth.",
+    "Remain rooted in truth.",
+    "I am your peace.",
+    "Let grace lead you.",
+    "You are deeply known.",
+    "I am faithful.",
+    "Your healing matters.",
+    "Come dwell with Me.",
+    "My love covers you.",
+    "You are cherished.",
+    "I walk with you.",
+    "My light surrounds you.",
+    "Rest in My care.",
+    "Abide and flourish."
+  ][i],
+  verse: [
+    "Psalm 46:10","John 15:4","Psalm 147:3","Isaiah 41:10",
+    "John 14:27","Isaiah 40:31","Psalm 34:18","2 Corinthians 5:17",
+    "2 Corinthians 12:9","Zephaniah 3:17","Deuteronomy 31:6",
+    "Psalm 91:2","Matthew 11:28","1 John 4:16","Romans 8:28",
+    "Psalm 46:10","Luke 12:6","Philippians 1:6","Colossians 2:7",
+    "John 16:33","Ephesians 2:8","Psalm 139:1","Lamentations 3:22",
+    "Jeremiah 30:17","Psalm 27:4","Romans 5:8","Isaiah 43:4",
+    "Micah 6:8","John 1:5","Psalm 4:8","John 15:5"
+  ][i],
+  prayer: "Lord Jesus, I choose to dwell in You today. Heal what is tender, strengthen what is weak, and draw me ever closer to Your heart. Amen."
+}));
 
-// Show countdown screen initially
-// Click event to open the gift
-giftContainer.onclick = () => {
-  countdownScreen.classList.add('hidden');
-  mainContainer.classList.add('visible');
-  document.body.style.overflow = 'auto'; // Allow scroll after opening
-  initializeApp();
-};
+let month = today.getMonth();
+let year = today.getFullYear();
 
-// Menu toggle
-menuToggle.onclick = () => {
-  menuItems.classList.toggle('show');
-};
+const calendar = document.getElementById("calendar");
+const monthTitle = document.getElementById("monthTitle");
 
-// Share functionality
-shareBtn.onclick = () => {
-  if (navigator.share) {
-    navigator.share({
-      title: 'Happy 2026 – Dwelling in Christ',
-      text: 'Check out this beautiful 2026 devotional calendar!',
-      url: window.location.href
-    });
-  } else {
-    // Fallback: copy to clipboard
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      alert('Link copied to clipboard!');
-    });
-  }
-};
+function renderCalendar() {
+  calendar.innerHTML = "";
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-function initializeApp() {
-  const devotionals = Array.from({length:31},(_,i)=>({
-    message: [
-      "Rest in Me. Healing begins when striving ends.",
-      "Abide in Me; closeness is where strength grows.",
-      "I am gently restoring your heart.",
-      "You are safe in My presence.",
-      "Let My peace settle you today.",
-      "Remain with Me and be renewed.",
-      "I am near to the brokenhearted.",
-      "You are being made whole.",
-      "My grace is sufficient for you.",
-      "Stay with Me; I delight in you.",
-      "You are not alone.",
-      "I am your refuge.",
-      "Trust Me with your wounds.",
-      "Healing flows from My love.",
-      "I am shaping beauty in you.",
-      "Be still and know Me.",
-      "Your heart is precious to Me.",
-      "I am patient with your growth.",
-      "Remain rooted in truth.",
-      "I am your peace.",
-      "Let grace lead you.",
-      "You are deeply known.",
-      "I am faithful.",
-      "Your healing matters.",
-      "Come dwell with Me.",
-      "My love covers you.",
-      "You are cherished.",
-      "I walk with you.",
-      "My light surrounds you.",
-      "Rest in My care.",
-      "Abide and flourish."
-    ][i],
-    verse: [
-      "Psalm 46:10","John 15:4","Psalm 147:3","Isaiah 41:10",
-      "John 14:27","Isaiah 40:31","Psalm 34:18","2 Corinthians 5:17",
-      "2 Corinthians 12:9","Zephaniah 3:17","Deuteronomy 31:6",
-      "Psalm 91:2","Matthew 11:28","1 John 4:16","Romans 8:28",
-      "Psalm 46:10","Luke 12:6","Philippians 1:6","Colossians 2:7",
-      "John 16:33","Ephesians 2:8","Psalm 139:1","Lamentations 3:22",
-      "Jeremiah 30:17","Psalm 27:4","Romans 5:8","Isaiah 43:4",
-      "Micah 6:8","John 1:5","Psalm 4:8","John 15:5"
-    ][i],
-    prayer: "Lord Jesus, I choose to dwell in You today. Heal what is tender, strengthen what is weak, and draw me ever closer to Your heart. Amen."
-  }));
+  monthTitle.textContent = new Date(year, month)
+    .toLocaleString("default",{month:"long",year:"numeric"});
 
-  let month = today.getMonth();
-  let year = today.getFullYear();
+  for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement("div"));
 
-  const calendar = document.getElementById("calendar");
-  const monthTitle = document.getElementById("monthTitle");
-  const nameInput = document.getElementById("nameInput");
-  const nameSection = document.getElementById("nameSection");
-  const headerTitle = document.getElementById("headerTitle");
+  for(let d=1;d<=daysInMonth;d++){
+    const cell = document.createElement("div");
+    const cellDate = new Date(year,month,d);
+    const unlocked = cellDate <= today;
 
-  // Load saved name from localStorage
-  let userName = localStorage.getItem('userName') || '';
-  if (userName) {
-    nameInput.value = userName;
-    updateHeaderWithName();
-  } else {
-    // Show initial greeting only if no name is set
-    setTimeout(() => {
-      alert("Welcome to your 2026 devotional journey! Please enter your name to begin.");
-    }, 500);
-  }
+    cell.className = "day" + (unlocked ? " unlocked" : "");
+    if(d===today.getDate() && month===today.getMonth() && year===today.getFullYear())
+      cell.classList.add("today");
 
-  // Event listener for name input
-  nameInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && nameInput.value.trim()) {
-      userName = nameInput.value.trim();
-      localStorage.setItem('userName', userName);
-      updateHeaderWithName();
+    cell.innerHTML = `<div class="day-number">${d}</div>` +
+      (unlocked ? "" : `<div class="lock">locked</div>`);
+
+    if(unlocked){
+      cell.onclick = ()=>selectDay(d);
     }
-  });
-
-  nameInput.addEventListener('blur', () => {
-    if (nameInput.value.trim()) {
-      userName = nameInput.value.trim();
-      localStorage.setItem('userName', userName);
-      updateHeaderWithName();
-    }
-  });
-
-  function updateHeaderWithName() {
-    headerTitle.textContent = `Greetings, ${userName}!`;
-    nameSection.classList.add('hidden');
+    calendar.appendChild(cell);
   }
+}
 
-  function renderCalendar() {
-    calendar.innerHTML = "";
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+function selectDay(day){
+  playF(day);
+  const data = devotionals[day-1];
+  document.getElementById("messageTitle").textContent = `Day ${day}`;
+  document.getElementById("messageText").textContent = data.message;
+  document.getElementById("scriptureText").textContent = data.verse;
+  document.getElementById("prayerText").textContent = data.prayer;
+  document.getElementById("prayerText").style.display = "none";
+}
 
-    monthTitle.textContent = new Date(year, month)
-      .toLocaleString("default",{month:"long",year:"numeric"});
+function togglePrayer(){
+  const p = document.getElementById("prayerText");
+  p.style.display = p.style.display==="block"?"none":"block";
+}
 
-    for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement("div"));
-
-    for(let d=1;d<=daysInMonth;d++){
-      const cell = document.createElement("div");
-      const cellDate = new Date(year,month,d);
-      const unlocked = cellDate <= today;
-
-      cell.className = "day" + (unlocked ? " unlocked" : "");
-      if(d===today.getDate() && month===today.getMonth() && year===today.getFullYear())
-        cell.classList.add("today");
-
-      cell.innerHTML = `<div class="day-number">${d}</div>` +
-        (unlocked ? "" : `<div class="lock">locked</div>`);
-
-      if(unlocked){
-        cell.onclick = ()=>selectDay(d);
-      }
-      calendar.appendChild(cell);
-    }
-  }
-
-  function selectDay(day){
-    playF(day);
-    const data = devotionals[day-1];
-    document.getElementById("messageTitle").textContent = `Day ${day}`;
-    document.getElementById("messageText").textContent = data.message;
-    document.getElementById("scriptureText").textContent = data.verse;
-    document.getElementById("prayerText").textContent = data.prayer;
-    document.getElementById("prayerText").style.display = "none";
-    // Scroll to the message box
-    document.getElementById('message-box').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function togglePrayer(){
-    const p = document.getElementById("prayerText");
-    p.style.display = p.style.display==="block"?"none":"block";
-  }
-
-  function changeMonth(n){
-    month += n;
-    if(month<0){month=11;year--;}
-    if(month>11){month=0;year++;}
-    renderCalendar();
-  }
-
-  function playF(day = 1){
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-
-    // Full gentle F-major palette
-    const scale = [
-      349.23, // F
-      440.00, // A
-      523.25, // C
-      587.33, // D
-      466.16  // Bb
-    ];
-
-    // Determine how many notes are allowed today
-    const noteCount = Math.min(2 + Math.floor(day / 6), scale.length);
-    const melody = scale.slice(0, noteCount);
-
-    const now = ctx.currentTime;
-
-      
-      melody.forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = "sine";
-      osc.frequency.value = freq;
-
-      const start = now + i * 0.55;
-
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.035, start + 0.2);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + 1.0);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(start);
-      osc.stop(start + 1.2);
-    });
-  }
-
+function changeMonth(n){
+  month += n;
+  if(month<0){month=11;year--;}
+  if(month>11){month=0;year++;}
   renderCalendar();
 }
+
+function playF(day = 1){
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+  // Full gentle F-major palette
+  const scale = [
+    349.23, // F
+    440.00, // A
+    523.25, // C
+    587.33, // D
+    466.16  // Bb
+  ];
+
+  // Determine how many notes are allowed today
+  const noteCount = Math.min(2 + Math.floor(day / 6), scale.length);
+  const melody = scale.slice(0, noteCount);
+
+  const now = ctx.currentTime;
+
+  melody.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.value = freq;
+
+    const start = now + i * 0.55;
+
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.035, start + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + 1.0);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(start);
+    osc.stop(start + 1.2);
+  });
+}
+
+
+
+renderCalendar();
 </script>
 </body>
 </html>
