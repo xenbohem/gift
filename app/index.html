@@ -37,11 +37,14 @@
   </main>
 
   <script src="install.js"></script>
-
   <script>
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
+setTimeout(() => {
+  document.getElementById("splash").remove();
+  document.getElementById("appContent").hidden = false;
+}, 2000);
 </script>
 </body>
 </html>
